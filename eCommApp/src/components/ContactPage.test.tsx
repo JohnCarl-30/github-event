@@ -19,7 +19,7 @@ describe('ContactPage Component', () => {
 
     it('should render contact details', () => {
         renderContactPage();
-        expect(screen.getByText('Email: support@dailyharvest.com')).toBeInTheDocument();
+        expect(screen.getByText('Email: support@thedailyharvest.com')).toBeInTheDocument();
         expect(screen.getByText('Phone: (555) 123-4567')).toBeInTheDocument();
     });
 });

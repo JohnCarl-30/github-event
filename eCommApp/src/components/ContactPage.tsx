@@ -7,7 +7,7 @@ const ContactPage = () => {
             <Header />
             <main className="main-content">
                 <h2>Contact Us</h2>
-                <p>Email: support@dailyharvest.com</p>
+                <p>Email: support@thedailyharvest.com</p>
                 <p>Phone: (555) 123-4567</p>
             </main>
             <Footer />
