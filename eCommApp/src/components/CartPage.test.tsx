@@ -46,6 +46,7 @@ const mockCartItems: CartItem[] = [
 const mockCartContext = {
     cartItems: mockCartItems,
     addToCart: vi.fn(),
+    removeFromCart: vi.fn(),
     clearCart: vi.fn()
 };
 
@@ -78,6 +79,7 @@ describe('CartPage', () => {
         const emptyCartContext = {
             cartItems: [],
             addToCart: vi.fn(),
+            removeFromCart: vi.fn(),
             clearCart: vi.fn()
         };
         renderWithCartContext(emptyCartContext);
@@ -95,6 +97,7 @@ describe('CartPage', () => {
         const emptyCartContext = {
             cartItems: [],
             addToCart: vi.fn(),
+            removeFromCart: vi.fn(),
             clearCart: vi.fn()
         };
         renderWithCartContext(emptyCartContext);
@@ -133,6 +136,7 @@ describe('CartPage', () => {
         const contextWithMocks = {
             cartItems: mockCartItems,
             addToCart: vi.fn(),
+            removeFromCart: vi.fn(),
             clearCart: mockClearCart
         };
 
@@ -154,6 +158,7 @@ describe('CartPage', () => {
         const contextWithMocks = {
             cartItems: mockCartItems,
             addToCart: vi.fn(),
+            removeFromCart: vi.fn(),
             clearCart: mockClearCart
         };
 
@@ -196,6 +201,7 @@ describe('CartPage', () => {
         const singleItemContext = {
             cartItems: [mockCartItems[0]],
             addToCart: vi.fn(),
+            removeFromCart: vi.fn(),
             clearCart: vi.fn()
         };
 
@@ -225,6 +231,7 @@ describe('CartPage', () => {
         const contextWithMultiple = {
             cartItems: multipleItems,
             addToCart: vi.fn(),
+            removeFromCart: vi.fn(),
             clearCart: vi.fn()
         };
 
@@ -240,6 +247,7 @@ describe('CartPage', () => {
         const contextWithMocks = {
             cartItems: mockCartItems,
             addToCart: vi.fn(),
+            removeFromCart: vi.fn(),
             clearCart: mockClearCart
         };
 
@@ -254,5 +262,22 @@ describe('CartPage', () => {
         // Verify order processed page contains all product info
         expect(screen.getByText('Price: $29.99')).toBeInTheDocument();
         expect(screen.getByText('Price: $49.99')).toBeInTheDocument();
+    });
+
+    it('calls removeFromCart when remove item is clicked', async () => {
+        const user = userEvent.setup();
+        const mockRemoveFromCart = vi.fn();
+        const contextWithMocks = {
+            cartItems: mockCartItems,
+            addToCart: vi.fn(),
+            removeFromCart: mockRemoveFromCart,
+            clearCart: vi.fn()
+        };
+
+        renderWithCartContext(contextWithMocks);
+        const removeButtons = screen.getAllByRole('button', { name: 'Remove Item' });
+        await user.click(removeButtons[0]);
+
+        expect(mockRemoveFromCart).toHaveBeenCalledWith('1');
     });
 });

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { CartProvider, CartContext, CartItem } from './CartContext';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { CartProvider, CartContext } from './CartContext';
 import { useContext, useState } from 'react';
 import { Product } from '../types';
 
@@ -21,6 +21,7 @@ const CartConsumer = () => {
             <div data-testid="cart-count">{context.cartItems.length}</div>
             <button onClick={() => handleAdd(testProduct)} data-testid="add-btn">Add</button>
             <button onClick={() => handleAdd(testProduct2)} data-testid="add-btn2">Add 2</button>
+            <button onClick={() => context.removeFromCart(testProduct.id || '')} data-testid="remove-btn">Remove</button>
             <button onClick={() => context.clearCart()} data-testid="clear-btn">Clear</button>
             {context.cartItems.map(item => (
                 <div key={item.id} data-testid={`item-${item.id}`}>
@@ -79,6 +80,7 @@ describe('CartContext', () => {
         );
 
         expect(screen.getByTestId('add-btn')).toBeInTheDocument();
+        expect(screen.getByTestId('remove-btn')).toBeInTheDocument();
         expect(screen.getByTestId('clear-btn')).toBeInTheDocument();
     });
 
@@ -124,5 +126,18 @@ describe('CartContext', () => {
         // The component should support adding multiple products
         expect(screen.getByTestId('add-btn')).toBeInTheDocument();
         expect(screen.getByTestId('add-btn2')).toBeInTheDocument();
+    });
+
+    it('should remove item from cart', () => {
+        render(
+            <CartProvider>
+                <CartConsumer />
+            </CartProvider>
+        );
+
+        fireEvent.click(screen.getByTestId('add-btn'));
+        fireEvent.click(screen.getByTestId('remove-btn'));
+
+        expect(screen.getByTestId('cart-count')).toHaveTextContent('0');
     });
 });
