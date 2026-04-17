@@ -29,9 +29,9 @@ describe('ContactPage Component', () => {
         const user = userEvent.setup();
         renderContactPage();
 
-        await user.type(screen.getByPlaceholderText('Your Name'), 'Taylor');
-        await user.type(screen.getByPlaceholderText('Your Email'), 'taylor@example.com');
-        await user.type(screen.getByPlaceholderText('Your Message'), 'Hello team');
+        await user.type(screen.getByLabelText('Your Name'), 'Taylor');
+        await user.type(screen.getByLabelText('Your Email'), 'taylor@example.com');
+        await user.type(screen.getByLabelText('Your Message'), 'Hello team');
         await user.click(screen.getByRole('button', { name: 'Send Message' }));
 
         expect(screen.getByText('Thanks for reaching out! We will get back to you soon.')).toBeInTheDocument();

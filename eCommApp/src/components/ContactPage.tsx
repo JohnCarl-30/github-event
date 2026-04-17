@@ -28,30 +28,48 @@ const ContactPage = () => {
                     onSubmit={handleSubmit}
                     style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: 300, maxWidth: 480 }}
                 >
+                    <label htmlFor="contact-name">Your Name</label>
                     <input
+                        id="contact-name"
                         type="text"
                         value={name}
-                        onChange={(event) => setName(event.target.value)}
-                        placeholder="Your Name"
+                        onChange={(event) => {
+                            setName(event.target.value);
+                            setIsSubmitted(false);
+                        }}
+                        placeholder="John Smith"
+                        aria-required="true"
                         required
                     />
+                    <label htmlFor="contact-email">Your Email</label>
                     <input
+                        id="contact-email"
                         type="email"
                         value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                        placeholder="Your Email"
+                        onChange={(event) => {
+                            setEmail(event.target.value);
+                            setIsSubmitted(false);
+                        }}
+                        placeholder="name@example.com"
+                        aria-required="true"
                         required
                     />
+                    <label htmlFor="contact-message">Your Message</label>
                     <textarea
+                        id="contact-message"
                         value={message}
-                        onChange={(event) => setMessage(event.target.value)}
-                        placeholder="Your Message"
+                        onChange={(event) => {
+                            setMessage(event.target.value);
+                            setIsSubmitted(false);
+                        }}
+                        placeholder="Tell us how we can help..."
                         rows={4}
+                        aria-required="true"
                         required
                     />
                     <button type="submit">Send Message</button>
                 </form>
-                {isSubmitted && <p>Thanks for reaching out! We will get back to you soon.</p>}
+                {isSubmitted && <p role="status">Thanks for reaching out! We will get back to you soon.</p>}
             </main>
             <Footer />
         </div>
