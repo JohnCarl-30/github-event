@@ -46,6 +46,7 @@ const mockCartItems: CartItem[] = [
 const mockCartContext = {
     cartItems: mockCartItems,
     addToCart: vi.fn(),
+    decreaseCartItemQuantity: vi.fn(),
     removeFromCart: vi.fn(),
     clearCart: vi.fn()
 };
@@ -79,6 +80,7 @@ describe('CartPage', () => {
         const emptyCartContext = {
             cartItems: [],
             addToCart: vi.fn(),
+            decreaseCartItemQuantity: vi.fn(),
             removeFromCart: vi.fn(),
             clearCart: vi.fn()
         };
@@ -97,6 +99,7 @@ describe('CartPage', () => {
         const emptyCartContext = {
             cartItems: [],
             addToCart: vi.fn(),
+            decreaseCartItemQuantity: vi.fn(),
             removeFromCart: vi.fn(),
             clearCart: vi.fn()
         };
@@ -136,6 +139,7 @@ describe('CartPage', () => {
         const contextWithMocks = {
             cartItems: mockCartItems,
             addToCart: vi.fn(),
+            decreaseCartItemQuantity: vi.fn(),
             removeFromCart: vi.fn(),
             clearCart: mockClearCart
         };
@@ -158,6 +162,7 @@ describe('CartPage', () => {
         const contextWithMocks = {
             cartItems: mockCartItems,
             addToCart: vi.fn(),
+            decreaseCartItemQuantity: vi.fn(),
             removeFromCart: vi.fn(),
             clearCart: mockClearCart
         };
@@ -201,6 +206,7 @@ describe('CartPage', () => {
         const singleItemContext = {
             cartItems: [mockCartItems[0]],
             addToCart: vi.fn(),
+            decreaseCartItemQuantity: vi.fn(),
             removeFromCart: vi.fn(),
             clearCart: vi.fn()
         };
@@ -231,6 +237,7 @@ describe('CartPage', () => {
         const contextWithMultiple = {
             cartItems: multipleItems,
             addToCart: vi.fn(),
+            decreaseCartItemQuantity: vi.fn(),
             removeFromCart: vi.fn(),
             clearCart: vi.fn()
         };
@@ -247,6 +254,7 @@ describe('CartPage', () => {
         const contextWithMocks = {
             cartItems: mockCartItems,
             addToCart: vi.fn(),
+            decreaseCartItemQuantity: vi.fn(),
             removeFromCart: vi.fn(),
             clearCart: mockClearCart
         };
@@ -270,6 +278,7 @@ describe('CartPage', () => {
         const contextWithMocks = {
             cartItems: mockCartItems,
             addToCart: vi.fn(),
+            decreaseCartItemQuantity: vi.fn(),
             removeFromCart: mockRemoveFromCart,
             clearCart: vi.fn()
         };
@@ -279,5 +288,41 @@ describe('CartPage', () => {
         await user.click(removeButtons[0]);
 
         expect(mockRemoveFromCart).toHaveBeenCalledWith('1');
+    });
+
+    it('calls addToCart when plus button is clicked', async () => {
+        const user = userEvent.setup();
+        const mockAddToCart = vi.fn();
+        const contextWithMocks = {
+            cartItems: mockCartItems,
+            addToCart: mockAddToCart,
+            decreaseCartItemQuantity: vi.fn(),
+            removeFromCart: vi.fn(),
+            clearCart: vi.fn()
+        };
+
+        renderWithCartContext(contextWithMocks);
+        const plusButtons = screen.getAllByRole('button', { name: /Increase quantity for/i });
+        await user.click(plusButtons[0]);
+
+        expect(mockAddToCart).toHaveBeenCalledWith(mockCartItems[0]);
+    });
+
+    it('calls decreaseCartItemQuantity when minus button is clicked', async () => {
+        const user = userEvent.setup();
+        const mockDecreaseQuantity = vi.fn();
+        const contextWithMocks = {
+            cartItems: mockCartItems,
+            addToCart: vi.fn(),
+            decreaseCartItemQuantity: mockDecreaseQuantity,
+            removeFromCart: vi.fn(),
+            clearCart: vi.fn()
+        };
+
+        renderWithCartContext(contextWithMocks);
+        const minusButtons = screen.getAllByRole('button', { name: /Decrease quantity for/i });
+        await user.click(minusButtons[0]);
+
+        expect(mockDecreaseQuantity).toHaveBeenCalledWith('1');
     });
 });

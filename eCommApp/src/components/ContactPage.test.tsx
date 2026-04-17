@@ -25,6 +25,18 @@ describe('ContactPage Component', () => {
         expect(screen.getByText('Address: 123 Harvest Lane, Freshville, CA 90210')).toBeInTheDocument();
     });
 
+    it('should render styled contact layout', () => {
+        const { container } = render(
+            <BrowserRouter>
+                <ContactPage />
+            </BrowserRouter>
+        );
+
+        expect(container.querySelector('.contact-container')).toBeInTheDocument();
+        expect(container.querySelector('.contact-form')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Send Message' })).toHaveClass('submit-btn');
+    });
+
     it('should show confirmation message after sending contact form', async () => {
         const user = userEvent.setup();
         renderContactPage();

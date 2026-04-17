@@ -14,7 +14,7 @@ const CartPage = () => {
         throw new Error('CartContext must be used within a CartProvider');
     }
 
-    const { cartItems, removeFromCart, clearCart } = cartContext;
+    const { cartItems, addToCart, decreaseCartItemQuantity, removeFromCart, clearCart } = cartContext;
 
     const handleCheckout = () => {
         setIsCheckingOut(true);
@@ -70,7 +70,23 @@ const CartPage = () => {
                                         <div className="cart-item-info">
                                             <h3>{item.name}</h3>
                                             <p>Price: ${item.price.toFixed(2)}</p>
-                                            <p>Quantity: {item.quantity}</p>
+                                            <div className="quantity-controls">
+                                                <button
+                                                    type="button"
+                                                    aria-label={`Decrease quantity for ${item.name}`}
+                                                    onClick={() => decreaseCartItemQuantity(item.id || '')}
+                                                >
+                                                    -
+                                                </button>
+                                                <p>Quantity: {item.quantity}</p>
+                                                <button
+                                                    type="button"
+                                                    aria-label={`Increase quantity for ${item.name}`}
+                                                    onClick={() => addToCart(item)}
+                                                >
+                                                    +
+                                                </button>
+                                            </div>
                                             <button onClick={() => removeFromCart(item.id || '')}>Remove Item</button>
                                         </div>
                                     </div>
