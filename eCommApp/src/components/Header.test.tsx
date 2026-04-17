@@ -22,6 +22,7 @@ describe('Header Component', () => {
         expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: 'Products' })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: 'Cart' })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: 'Contact' })).toBeInTheDocument();
     });
 
     it('should render admin login button', () => {
@@ -36,6 +37,7 @@ describe('Header Component', () => {
         expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
         expect(screen.getByRole('link', { name: 'Products' })).toHaveAttribute('href', '/products');
         expect(screen.getByRole('link', { name: 'Cart' })).toHaveAttribute('href', '/cart');
+        expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/contact');
     });
 
     it('should render header as a header element', () => {

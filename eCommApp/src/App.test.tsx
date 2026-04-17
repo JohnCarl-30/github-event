@@ -35,4 +35,14 @@ describe('App Component', () => {
         // Should render the home page by default
         expect(screen.getByText(/Welcome to the The Daily Harvest/i)).toBeInTheDocument();
     });
+
+    it('should render contact route', () => {
+        render(
+            <MemoryRouter initialEntries={['/contact']}>
+                <App />
+            </MemoryRouter>
+        );
+
+        expect(screen.getByRole('heading', { name: 'Contact Us' })).toBeInTheDocument();
+    });
 });
